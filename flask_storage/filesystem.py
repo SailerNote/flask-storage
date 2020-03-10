@@ -2,6 +2,7 @@ import errno
 import os
 import shutil
 from io import StringIO  ## for Python 3
+from io import BytesIO
 
 from flask import current_app, url_for
 
@@ -66,8 +67,6 @@ class FileSystemStorage(Storage):
             if e.status_code != 409:
                 raise e
 
-        # todo https://stackoverflow.com/questions/33054527/typeerror-a-bytes-like-object-is-required-not-str-when-writing-to-a-file-in
-        # with open(full_path, 'wb') as destination:
         with open(full_path, 'w') as destination:
             buffer_size = 16384
             # we should allow strings to be passed as content since the other
@@ -76,7 +75,6 @@ class FileSystemStorage(Storage):
                 io = StringIO()
                 io.write(content)
                 content = io
-
             content.seek(0)
             try:
                 shutil.copyfileobj(content, destination, buffer_size)

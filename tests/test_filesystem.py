@@ -78,15 +78,15 @@ class TestFileSystemCreateFolder(FileSystemTestCase):
             storage.create_folder(self.path)
 
     # todo makesure default uploads folder canbe create or exists
-    # def test_raises_exception_on_file_conflict(self):
-    #     storage = FileSystemStorage(os.path.dirname(__file__))
-    #     storage.save('uploads', 'some text')
-    #     with raises(StorageException):
-    #         storage.create_folder('uploads')
+    def test_raises_exception_on_file_conflict(self):
+        storage = FileSystemStorage(os.path.dirname(__file__))
+        storage.save('uploads', 'some text')
+        with raises(StorageException):
+            storage.create_folder('uploads')
 
     def test_conflict_exception_contains_proper_status_code(self):
         storage = FileSystemStorage(os.path.dirname(__file__))
-        storage.save('uploads', 'some text')
+        storage.save('./uploads', 'some text')
         try:
             storage.create_folder('uploads')
             assert False
