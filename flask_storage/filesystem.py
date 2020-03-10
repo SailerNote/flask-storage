@@ -66,7 +66,9 @@ class FileSystemStorage(Storage):
             if e.status_code != 409:
                 raise e
 
-        with open(full_path, 'wb') as destination:
+        # todo https://stackoverflow.com/questions/33054527/typeerror-a-bytes-like-object-is-required-not-str-when-writing-to-a-file-in
+        # with open(full_path, 'wb') as destination:
+        with open(full_path, 'w') as destination:
             buffer_size = 16384
             # we should allow strings to be passed as content since the other
             # drivers support this too

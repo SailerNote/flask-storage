@@ -1,6 +1,5 @@
-from __future__ import with_statement
-from StringIO import StringIO
 from pytest import raises
+from io import StringIO  ## for Python 3
 
 from tests import TestCase
 from flask_storage import (

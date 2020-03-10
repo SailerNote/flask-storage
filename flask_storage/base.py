@@ -14,6 +14,16 @@ def reraise(exception):
         'message': exception.message,
         'wrapped_exception': exception
     }
+    # cloudfiles and S3Boto exceptions have http compatible status codes we
+    # need to assign them to StorageException
+    if hasattr(exception, 'status'):
+        kwargs['status_code'] = exception.status
+
+        if kwargs['status_code'] == 404:
+            raise FileNotFoundError(**kwargs)
+        elif kwargs['status_code'] == 409:
+            raise FileExistsError(**kwargs)
+
     raise StorageException(**kwargs)
 
 
