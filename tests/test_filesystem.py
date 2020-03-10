@@ -1,4 +1,3 @@
-from __future__ import with_statement
 import os
 import shutil
 from pytest import raises
@@ -47,9 +46,9 @@ class TestFileSystemDefaults(FileSystemTestCase):
         storage = FileSystemStorage()
         called_url_for = (
             flexmock(flask_storage.filesystem)
-            .should_receive('url_for')
-            .once()
-            .with_args('custom.file_view', filename='file_name')
+                .should_receive('url_for')
+                .once()
+                .with_args('custom.file_view', filename='file_name')
         )
         storage.url('file_name')
         called_url_for.verify()
@@ -90,7 +89,7 @@ class TestFileSystemCreateFolder(FileSystemTestCase):
         try:
             storage.create_folder('uploads')
             assert False
-        except StorageException, e:
+        except StorageException as e:
             assert e.status_code == 409
             assert e.message
 

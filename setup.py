@@ -11,17 +11,18 @@ class PyTest(Command):
     def finalize_options(self):
         pass
 
-    def run(self):
+    @staticmethod
+    def run():
         errno = subprocess.call(['py.test'])
         raise SystemExit(errno)
 
 
 setup(
     name='Flask-Storage',
-    version='0.1.3',
-    url='http://github.com/kvesteri/flask-storage',
+    version='0.0.1',
+    url='https://github.com/SailerNote/flask-storage',
     license='MIT',
-    author='Konsta Vesterinen',
+    author='Yansy',
     author_email='konsta.vesterinen@gmail.com',
     description='Various file storage backends for Flask apps.',
     long_description=
@@ -32,10 +33,7 @@ setup(
     zip_safe=False,
     platforms='any',
     install_requires=[
-        'Flask>=0.7',
-        'boto>=2.5.2',
-        'python-cloudfiles>=1.7.10'
-    ],
+        'Flask>=1.1.1'],
     cmdclass={'test': PyTest},
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -45,6 +43,5 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
+        'Topic :: Software Development :: Libraries :: Python Modules']
 )

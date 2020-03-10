@@ -1,10 +1,10 @@
-from __future__ import with_statement
 import errno
 import os
 import shutil
-import StringIO
+from io import StringIO  ## for Python 3
 
 from flask import current_app, url_for
+
 from .base import Storage, StorageFile, StorageException, reraise as _reraise
 
 
@@ -62,7 +62,7 @@ class FileSystemStorage(Storage):
         directory = os.path.dirname(full_path)
         try:
             self.create_folder(directory)
-        except StorageException, e:
+        except StorageException as e:
             if e.status_code != 409:
                 raise e
 
@@ -70,15 +70,15 @@ class FileSystemStorage(Storage):
             buffer_size = 16384
             # we should allow strings to be passed as content since the other
             # drivers support this too
-            if isinstance(content, basestring):
-                io = StringIO.StringIO()
+            if isinstance(content, str):
+                io = StringIO()
                 io.write(content)
                 content = io
 
             content.seek(0)
             try:
                 shutil.copyfileobj(content, destination, buffer_size)
-            except OSError, e:
+            except OSError as e:
                 reraise(e)
         return self.file_class(self, name)
 
@@ -87,27 +87,27 @@ class FileSystemStorage(Storage):
             file_ = self.file_class(self, name)
             file_.file
             return file_
-        except IOError, e:
+        except IOError as  e:
             reraise(e)
 
     def delete_folder(self, name):
         path = self.path(name)
         try:
             return shutil.rmtree(path)
-        except OSError, e:
+        except OSError as  e:
             reraise(e)
 
     def create_folder(self, path):
         try:
             return os.makedirs(path)
-        except OSError, e:
+        except OSError as e:
             reraise(e)
 
     def delete(self, name):
         name = self.path(name)
         try:
             return os.remove(name)
-        except OSError, e:
+        except OSError as e:
             reraise(e)
 
     def exists(self, name):

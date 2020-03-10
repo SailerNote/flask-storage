@@ -10,3 +10,5 @@ def force_unicode(name, encoding='utf-8'):
         return name
     else:
         return name.decode(encoding)
+
+# todo https://stackoverflow.com/questions/19877306/nameerror-global-name-unicode-is-not-defined-in-python-3

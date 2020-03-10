@@ -1,5 +1,3 @@
-from .amazon import S3BotoStorage, S3BotoStorageFile
-from .cloudfiles import CloudFilesStorage, CloudFilesStorageFile
 from .filesystem import FileSystemStorage, FileSystemStorageFile
 from .mock import MockStorage, MockStorageFile
 from .base import (
@@ -13,8 +11,6 @@ from .base import (
 
 
 __all__ = (
-    CloudFilesStorage,
-    CloudFilesStorageFile,
     FileExistsError,
     FileNotFoundError,
     FileSystemStorage,
@@ -22,8 +18,6 @@ __all__ = (
     MockStorage,
     MockStorageFile,
     PermissionError,
-    S3BotoStorage,
-    S3BotoStorageFile,
     Storage,
     StorageException,
     StorageFile,
@@ -34,8 +28,6 @@ __all__ = (
 
 
 STORAGE_DRIVERS = {
-    'amazon': S3BotoStorage,
-    'cloudfiles': CloudFilesStorage,
     'filesystem': FileSystemStorage,
     'mock': MockStorage
 }

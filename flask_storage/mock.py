@@ -13,7 +13,7 @@ class MockStorage(Storage):
         self.folder_name = folder_name
 
     def _save(self, name, content):
-        if isinstance(content, basestring):
+        if isinstance(content, str):
             self._files[name] = content
         else:
             content.seek(0)

@@ -1,11 +1,12 @@
+import abc
 import os
 import itertools
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 from .utils import force_str, force_unicode
 
-
-__all__ = ('Storage')
+__all__ = ['Storage', 'StorageFile', 'FileNotFoundError', 'FileExistsError',
+           'PermissionError', 'StorageException', 'StorageException']
 
 
 def reraise(exception):
@@ -13,16 +14,6 @@ def reraise(exception):
         'message': exception.message,
         'wrapped_exception': exception
     }
-    # cloudfiles and S3Boto exceptions have http compatible status codes we
-    # need to assign them to StorageException
-    if hasattr(exception, 'status'):
-        kwargs['status_code'] = exception.status
-
-        if kwargs['status_code'] == 404:
-            raise FileNotFoundError(**kwargs)
-        elif kwargs['status_code'] == 409:
-            raise FileExistsError(**kwargs)
-
     raise StorageException(**kwargs)
 
 
@@ -298,8 +289,8 @@ class StorageFile(object):
         if not isinstance(other, StorageFile):
             return NotImplemented
         return (
-            self.storage == other.storage and
-            self.name == other.name
+                self.storage == other.storage and
+                self.name == other.name
         )
 
     def __ne__(self, other):
